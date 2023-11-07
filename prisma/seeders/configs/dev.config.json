@@ -1,0 +1,9 @@
+{
+  "categories": { "write": true, "read": true, "delete": true },
+  "users": { "write": false, "read": true, "delete": true },
+  "customers": { "write": true, "read": true, "delete": true },
+  "couriers": { "write": true, "read": true, "delete": true },
+  "shops": { "write": true, "read": true, "delete": true },
+  "products": { "write": true, "read": true, "delete": true },
+  "orders": { "write": true, "read": true, "delete": true }
+}

@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgres-dev:
+    image: postgis/postgis:15-3.4
+    container_name: postgres-dev
+    restart: always
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    env_file:
+      - ../.env
+    volumes:
+      - malac-prodavac-postgres-dev:/var/lib/postgresql/data
+
+volumes:
+  malac-prodavac-postgres-dev:
+    name: malac-prodavac-postgres-dev

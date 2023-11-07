@@ -1,0 +1,174 @@
+[
+  { "name": "Brašno" },
+  {
+    "name": "Čajevi i kafa",
+    "categories": [
+      { "name": "Čaj od kamilice" },
+      { "name": "Čaj od matičnjaka" },
+      { "name": "Čaj od mente" }
+    ]
+  },
+  { "name": "Domaća jaja" },
+  {
+    "name": "Džem i slatko",
+    "categories": [
+      { "name": "Džem od aronije" },
+      { "name": "Džem od borovnice" },
+      { "name": "Džem od breskve" },
+      { "name": "Džem od crne ribizle" },
+      { "name": "Džem od dunje" },
+      { "name": "Džem od jagode" },
+      { "name": "Džem od kupine" },
+      { "name": "Džem od luka" },
+      { "name": "Džem od maline" },
+      { "name": "Džem od ribizle" },
+      { "name": "Džem od šljive" },
+      { "name": "Džem od smokve" },
+      { "name": "Džem od trešnje" },
+      { "name": "Slatko od aronije" },
+      { "name": "Slatko od borovnice" },
+      { "name": "Slatko od crne ribizle" },
+      { "name": "Slatko od dunje sa orasima" },
+      { "name": "Slatko od jagode" },
+      { "name": "Slatko od lubenice" },
+      { "name": "Slatko od maline" },
+      { "name": "Slatko od ribizle" },
+      { "name": "Slatko od ruže" },
+      { "name": "Slatko od smokve" },
+      { "name": "Slatko od trešnje" },
+      { "name": "Slatko od šljive" },
+      { "name": "Slatko od višnje" }
+    ]
+  },
+  {
+    "name": "Hleb",
+    "categories": [
+      { "name": "Hleb bez kvasca" },
+      { "name": "Integralni hleb" },
+      { "name": "Domaći hleb" },
+      { "name": "Hleb od heljde" },
+      { "name": "Ražani hleb" }
+    ]
+  },
+  {
+    "name": "Peciva",
+    "categories": [
+      { "name": "Carska pita" },
+      { "name": "Domaće kiflice" },
+      { "name": "Posne kiflice" },
+      { "name": "Proja sa sirom" },
+      { "name": "Slana peciva" }
+    ]
+  },
+  { "name": "Krompir" },
+  { "name": "Kuvana jela" },
+  { "name": "Likeri", "categories": [{ "name": "Liker od crne ribizle" }] },
+  {
+    "name": "Med i proizvodi od meda",
+    "categories": [
+      { "name": "Bagremov med" },
+      { "name": "Đumbir i med" },
+      { "name": "Imuno med" },
+      { "name": "Kurkuma i med" },
+      { "name": "Lipov med" },
+      { "name": "Livadski med" },
+      { "name": "Med i cimet" },
+      { "name": "Med i orasi" },
+      { "name": "Med sa orašastim plodovima" },
+      { "name": "Med sa saćem" },
+      { "name": "Med i voćem" },
+      { "name": "Propolis" },
+      { "name": "Suncokretov med" },
+      { "name": "Voćni med" }
+    ]
+  },
+  {
+    "name": "Meso i mesne prerađevine",
+    "categories": [
+      { "name": "Goveđa pršuta" },
+      { "name": "Kulen" },
+      { "name": "Pečenica" },
+      { "name": "Peglana kobasica" },
+      { "name": "Pršuta" },
+      { "name": "Sudžuk" }
+    ]
+  },
+  {
+    "name": "Mlečni proizvodi",
+    "categories": [
+      { "name": "Dimljeni kačkavalj" },
+      { "name": "Sjenički sir" },
+      { "name": "Kačkavalj" },
+      { "name": "Kozji sir" },
+      { "name": "Krem sir" },
+      { "name": "Magareće mleko" },
+      { "name": "Mladi sir" }
+    ]
+  },
+  { "name": "Namazi", "categories": [{ "name": "Sirni namaz" }] },
+  { "name": "Organski proizvodi" },
+  { "name": "Pečurke" },
+  { "name": "Pivo" },
+  {
+    "name": "Rakija",
+    "categories": [
+      { "name": "Komova rakija" },
+      { "name": "Medovača" },
+      { "name": "Orahovača" },
+      { "name": "Rakija od dunje" },
+      { "name": "Rakija od šljive" },
+      { "name": "Travarica" }
+    ]
+  },
+  { "name": "Riba" },
+  { "name": "Slatkiši" },
+  {
+    "name": "Sokovi",
+    "categories": [
+      { "name": "Sok od aronije" },
+      { "name": "Sok od bagrema" },
+      { "name": "Sok od borovnice" },
+      { "name": "Sok od crne ribizle" },
+      { "name": "Sok od kajsije" },
+      { "name": "Sok od koprive" },
+      { "name": "Sok od kupine" },
+      { "name": "Sok od maline" },
+      { "name": "Sok od nane" },
+      { "name": "Sok od nara" },
+      { "name": "Sok od ribizle" },
+      { "name": "Sok od višanja" },
+      { "name": "Sok od zove" }
+    ]
+  },
+  { "name": "Testenina" },
+  { "name": "Ulje" },
+  { "name": "Veganski proizvodi" },
+  {
+    "name": "Vino",
+    "categories": [{ "name": "Kupinovo vino" }, { "name": "Vino od aronije" }]
+  },
+  {
+    "name": "Voće i povrće",
+    "categories": [
+      { "name": "Batat krompir" },
+      { "name": "Bundeva" },
+      { "name": "Kupus" },
+      { "name": "Šargarepa" }
+    ]
+  },
+  { "name": "Začini, sosevi i bilje" },
+  { "name": "Zamrznuto pecivo" },
+  {
+    "name": "Zimnica",
+    "categories": [
+      { "name": "Cvekla zimnica" },
+      { "name": "Karfiol zimnica" },
+      { "name": "Kisela paprika" },
+      { "name": "Pinđur zimnica" },
+      { "name": "Šarena salata zimnica" },
+      { "name": "Turšija" },
+      { "name": "Zimnica od paprike" },
+      { "name": "Ajvar" }
+    ]
+  }
+]

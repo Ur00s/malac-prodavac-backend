@@ -1,0 +1,285 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions"]
+  binaryTargets   = ["native"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("POSTGRES_DATABASE_URL")
+  extensions = [postgis(version: "3.4.0")]
+}
+
+enum UserRole {
+  Customer
+  Courier
+  Shop
+}
+
+enum OrderStatus {
+  Ordered
+  Packaged
+  InDelivery
+  Received
+  Returned
+}
+
+enum DeliveryMethod {
+  ByCourier
+  SelfPickup
+}
+
+enum Currency {
+  RSD
+}
+
+enum PaymentMethod {
+  OnDelivery
+  PayPal
+}
+
+enum ProductMeasurementUnit {
+  KG
+  G
+  L
+  ML
+  PCS
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  firstName        String
+  lastName         String
+  email            String        @unique
+  password         String
+  address          String        @default("")
+  addressLatitude  Decimal?
+  addressLongitude Decimal?
+  phoneNumber      String?
+  currency         Currency      @default(RSD)
+  paymentMethod    PaymentMethod @default(OnDelivery)
+  roles            UserRole[]
+  updatedAt        DateTime      @updatedAt
+  createdAt        DateTime      @default(now())
+
+  customer       Customer?
+  shop           Shop?
+  courier        Courier?
+  profilePicture UserMedia?
+
+  @@map("users")
+}
+
+model Customer {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @unique
+  favoriteShops    Int[]
+  favoriteProducts Int[]
+  updatedAt        DateTime @updatedAt
+  createdAt        DateTime @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders  Order[]
+  chats   Chat[]
+  reviews Review[]
+
+  @@map("customers")
+}
+
+model Courier {
+  id                       Int      @id @default(autoincrement())
+  userId                   Int      @unique
+  pricePerKilometer        Decimal?
+  currentLocation          String?
+  currentLocationLatitude  Decimal?
+  currentLocationLongitude Decimal?
+  updatedAt                DateTime @updatedAt
+  createdAt                DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@map("couriers")
+}
+
+model Shop {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @unique
+  businessName String?
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[]
+  chats    Chat[]
+
+  @@map("shops")
+}
+
+model Order {
+  id               Int            @id @default(autoincrement())
+  productId        Int
+  customerId       Int
+  courierId        Int?
+  quantity         Decimal
+  accepted         Boolean        @default(false)
+  orderStatus      OrderStatus    @default(Ordered)
+  deliveryMethod   DeliveryMethod @default(ByCourier)
+  timeOfSelfPickup DateTime
+  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime       @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  courier  Courier? @relation(fields: [courierId], references: [id], onDelete: SetNull)
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("orders")
+}
+
+model Product {
+  id                   Int                    @id @default(autoincrement())
+  shopId               Int
+  categoryId           Int?
+  title                String                 @default("")
+  desc                 String                 @default("")
+  price                Decimal
+  unitOfMeasurement    ProductMeasurementUnit
+  available            Boolean                @default(true)
+  rating               Decimal                @default(0)
+  ratingsCount         Int                    @default(0)
+  availableAt          String?
+  availableAtLatitude  Decimal?
+  availableAtLongitude Decimal?
+  availableFromHours   Decimal?
+  availableTillHours   Decimal?
+  currency             Currency               @default(RSD)
+  updatedAt            DateTime               @updatedAt
+  createdAt            DateTime               @default(now())
+
+  shop          Shop           @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  category      Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  discounts     Discount[]
+  orders        Order[]
+  reviews       Review[]
+  productMedias ProductMedia[]
+
+  @@map("products")
+}
+
+model Discount {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  percentage Decimal  @default(0)
+  untilDate  DateTime
+  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("discounts")
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  customerId Int?
+  productId  Int
+  text       String?
+  rating     Int?
+  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+
+  product       Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  customer      Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  reviewReplies ReviewReply[]
+
+  @@unique([productId, customerId])
+  @@map("reviews")
+}
+
+model ReviewReply {
+  id        Int      @id @default(autoincrement())
+  text      String
+  reviewId  Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  review Review @relation(fields: [reviewId], references: [id])
+
+  @@map("review_replies")
+}
+
+model Category {
+  id               Int      @id @default(autoincrement())
+  parentCategoryId Int?
+  name             String   @unique
+  updatedAt        DateTime @updatedAt
+  createdAt        DateTime @default(now())
+
+  subCategories  Category[] @relation(name: "category_has_subcategory")
+  parentCategory Category?  @relation(name: "category_has_subcategory", fields: [parentCategoryId], references: [id])
+  products       Product[]
+
+  @@map("categories")
+}
+
+model UserMedia {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @unique
+  mimetype     String
+  key          String   @unique
+  originalName String
+  name         String?
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, key])
+  @@map("user_medias")
+}
+
+model ProductMedia {
+  id           Int      @id @default(autoincrement())
+  productId    Int
+  mimetype     String
+  key          String   @unique
+  originalName String
+  name         String?
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_medias")
+}
+
+model Chat {
+  id                 Int      @id @default(autoincrement())
+  customerId         Int?
+  shopId             Int?
+  visibilityCustomer Boolean  @default(true)
+  visibilityShop     Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
+  createdAt          DateTime @default(now())
+
+  customer     Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  shop         Shop?         @relation(fields: [shopId], references: [id], onDelete: SetNull)
+  chatMessages ChatMessage[]
+
+  @@unique([customerId, shopId])
+  @@map("chats")
+}
+
+model ChatMessage {
+  id              Int      @id @default(autoincrement())
+  chatId          Int
+  recipientUserId Int
+  text            String
+  opened          Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
